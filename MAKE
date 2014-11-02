@@ -1,0 +1,2 @@
+makefile: less
+     lessc less/main.less public/css/main.css
