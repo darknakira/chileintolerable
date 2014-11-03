@@ -15,6 +15,47 @@ h2 {
 }
 p { line-height: 1.333em; }
 
+.scroll-arrow {
+  position: absolute;
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 6px;
+  height: 60px;
+  width: 100px;
+  bottom: 0px;
+  margin-left: -50px;
+  left: 50%;
+}
+
+.scroll-arrow:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 51%;
+  background: @txtColor;
+  -webkit-transform: skew(0deg, 20deg);
+  -moz-transform: skew(0deg, 20deg);
+  -ms-transform: skew(0deg, 20deg);
+  -o-transform: skew(0deg, 20deg);
+  transform: skew(0deg, 20deg);
+}
+.scroll-arrow:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 5px;
+  width: 50%;
+  background: @txtColor;
+  -webkit-transform: skew(0deg, -20deg);
+  -moz-transform: skew(0deg, -20deg);
+  -ms-transform: skew(0deg, -20deg);
+  -o-transform: skew(0deg, -20deg);
+  transform: skew(0deg, -20deg);
+}
+
 /* full width/height container */
 #slides-container {
   width: 100%;
@@ -30,7 +71,12 @@ p { line-height: 1.333em; }
   top: 0;
   left: 0;
 
-  .logo { position: fixed; }
+  .logo {
+    margin-left: 50px;
+    margin-top: 50px;
+    position: fixed;
+
+  }
 
   .caption {
     position: absolute;
@@ -77,6 +123,14 @@ p { line-height: 1.333em; }
     background-color: #000;
     padding-left: 90px;
     padding-right: 90px;
+    .optContainer {
+      display: inline-block;
+      width: 580px;
+      button {
+        margin: 15px;
+        width: 250px;
+      }
+    }
     h2 {
       font-size: 72px;
     }
@@ -85,7 +139,7 @@ p { line-height: 1.333em; }
 }
 
 #slide-3 {
-  background: url('@{imgPath}/bcg_slide-3.jpg') no-repeat center center;
+ // background: url('@{imgPath}/bcg_slide-3.jpg') no-repeat center center;
   -webkit-transform: translate(100%,100%);
   -ms-transform: translate(100%,100%);
   transform: translate(100%,100%);
@@ -96,7 +150,7 @@ p { line-height: 1.333em; }
   color: @txtColor;
 }
 #slide-4 {
-  background: url('@{imgPath}/bcg_slide-4.jpg') no-repeat center center;
+ // background: url('@{imgPath}/bcg_slide-4.jpg') no-repeat center center;
   -webkit-transform: translate(100%,0%);
   -ms-transform: translate(100%,0%);
   transform: translate(100%,0%);
