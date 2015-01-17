@@ -1,6 +1,4 @@
 module.exports = function(grunt) {
-
-    // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         less : {
@@ -48,7 +46,7 @@ module.exports = function(grunt) {
             }
         }
     });
-
+    grunt.loadNpmTasks('grunt-react');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
