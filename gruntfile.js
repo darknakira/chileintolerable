@@ -6,7 +6,10 @@ module.exports = function(grunt) {
                 options: {
                     paths: ["src/less"],
                     cleancss: true,
-                    compress: true
+                    compress: true,
+                    modifyVars: {
+                        imgPath: '"http://192.168.0.26:3000/img/"'
+                    }
                 },
                 files: {
                     "public/css/main.css": "src/less/main.less"
@@ -18,7 +21,7 @@ module.exports = function(grunt) {
                     cleancss: true,
                     compress: true,
                     modifyVars: {
-                        imgPath: '"http://chileintolerable.cl/img"'
+                        imgPath: '"http://192.168.0.26:3000/img/"'
                     }
                 },
                 files: {
@@ -29,7 +32,7 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ['src/js/*.js','src/less/*.less'],
-                tasks: ['concat','less'],
+                tasks: ['concat','less:development'],
                 options: {
                     spawn: false
                 }
@@ -41,7 +44,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['src/js/skrollr.min.js', 'src/js/main.js'],
+                src: ['src/js/skrollr.min.js', 'src/js/*.js','src/js/main.js'],
                 dest: 'public/js/main.js'
             }
         }

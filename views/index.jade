@@ -1,0 +1,88 @@
+doctype html
+//if lt IE 7
+  html.no-js.lt-ie9.lt-ie8.lt-ie7  
+//if IE 7
+  html.no-js.lt-ie9.lt-ie8  
+//if IE 8
+  html.no-js.lt-ie9  
+// [if gt IE 8] <!
+html.no-js
+  // <![endif]
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title
+    meta(name='description', content='')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='css/bootstrap.min.css')
+    style.
+      body {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      }
+    link(rel='stylesheet', href='css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='css/main.css')
+    script(src='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js')
+  body
+    //if lt IE 7
+      p.browsehappy
+        | You are using an 
+        strong outdated
+        |  browser. Please 
+        a(href='http://browsehappy.com/') upgrade your browser
+        |  to improve your experience.
+    #slides-container
+      #slides(data-0='transform:translate(0%,0%);', data-150p='', data-200p='transform:translate(0%,-50%);', data-300p='', data-350p='transform:translate(-50%,-50%);', data-450p='transform:translate(-50%,0%);')
+        #slide-1.slide
+          .logo
+            img(src='img/logo/logitu.png', alt='')
+          .caption(data-0p='opacity: 1; transform:translate(0px,0px);', data-50p='opacity: 0; transform:translate(0px,-100%);', data-anchor-target='#helper')
+            h2
+              | Ya dejalo!,
+              br
+              | no te hagas el weón
+          .caption(data-60p='opacity: 0; transform:translate(-10px,0%);', data-120p='opacity: 1; transform:translate(0px,0px);', data-280p='opacity: 0; transform:translate(100px,0px);', data-anchor-target='#helper')
+            h2 Sólo admitelo...
+          .scroll-arrow
+        #slide-2.slide
+          .menubox.well-lg.col-lg-8.col-md-8.col-sm-8(data-210p='opacity: 0; transform:translate(30%,10%);', data-250p='opacity: 1; transform:translate(20%,10%);')
+            h2 Eres un
+            .optContainer
+              button.btn.btn-lg Maricón
+              button.btn.btn-lg Come guagua
+              button.btn.btn-lg Comunacho
+              button.btn.btn-lg Judío
+              button.btn.btn-lg Nana
+              button.btn.btn-lg Peruano
+              button.btn.btn-lg liceano con nombre de misíl
+              button.btn.btn-lg apatria
+              button.btn.btn-lg testículo de jehova
+              button.btn.btn-lg flaite
+              button.btn.btn-lg pelusa
+              button.btn.btn-lg fleto
+              button.btn.btn-lg canuto
+        #slide-3.slide
+          .caption(data-250p='opacity: 0; transform:translate(300px,0px);', data-300p='opacity: 1; transform:translate(0px,0px);', data-anchor-target='#helper')
+        #slide-4.slide
+          .caption(data-430p='opacity: 0;', data-450p='opacity: 1;', data-anchor-target='#helper')
+      #helper
+        .marker.red
+        .marker.green
+        .marker.blue
+        .marker.yellow
+    // /container
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script.
+      window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\\/script>')
+    script(src='js/vendor/bootstrap.min.js')
+    script(src='js/plugins.js')
+    script(src='js/main.js')
+    // Google Analytics: change UA-XXXXX-X to be your site's ID.
+    script.
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+
