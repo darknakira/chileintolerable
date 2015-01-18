@@ -1,0 +1,1 @@
+var locals = { title : 'Chile Intolerable' }

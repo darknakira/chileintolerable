@@ -1,18 +1,24 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        jasmine : {
+          // Your project's source files
+          src : 'src/**/*.js',
+          // Your Jasmine spec files
+          specs : 'specs/**/*spec.js',
+          // Your spec helper files
+          helpers : 'specs/helpers/*.js'
+        },
         less : {
             development: {
                 options: {
                     paths: ["src/less"],
-                    cleancss: true,
-                    compress: true,
                     modifyVars: {
                         imgPath: '"http://192.168.0.26:3000/img/"'
                     }
                 },
                 files: {
-                    "public/css/main.css": "src/less/main.less"
+                    "public/css/main.css": "src/less/style.less"
                 }
             },
             production: {
@@ -44,12 +50,13 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['src/js/skrollr.min.js', 'src/js/*.js','src/js/main.js'],
+                src: ['src/js/vendor/three.min.js','src/js/vendor/*.js','src/js/map.js','src/js/main.js'],
                 dest: 'public/js/main.js'
             }
         }
     });
     grunt.loadNpmTasks('grunt-react');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
