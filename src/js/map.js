@@ -6,11 +6,11 @@ function Map () {
 	var nowMsec = null
 	var onRenderFcts = [];
 	var container = new THREE.Object3D();
+	var tags = new THREE.Object3D();
 
 
 	var init = function() {
 		objects = [];
-		tags = [];
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 		camera.position.z = 3600;
 		camera.position.y = 150;
@@ -22,7 +22,7 @@ function Map () {
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.domElement.style.position = 'absolute';
 		document.getElementById( 'map' ).appendChild( renderer.domElement );
-
+		
 		//
 
 /*		controls   = new THREE.OrbitControls(camera);
@@ -32,46 +32,45 @@ function Map () {
 
 		createLand();
 
-		var socket = io.connect('192.168.0.26:3000');
+		scene.add(tags);
+		//var socket = io.connect('192.168.0.26:3000');
 
 	};
 
 
-	this.setTag = function(pos) {
+	this.setTag = function(pos,keyword) {
 
 
 		var element = document.createElement( 'div' );
 		element.className = 'tag';
-		element.textContent = "TEST";		
-
-
+		element.textContent = keyword;		
 
 		var tag = new THREE.CSS3DObject( element );
 		tag.position.set(objects[pos].position.x , objects[pos].position.y, objects[pos].position.z + 50);
-		//scene.add(tag);
-		tags.push(tag);
+		
 		container.add(tag);
 
 		onRenderFcts.push(function(delta, now){
-			scene.updateMatrixWorld();
 			tag.lookAt(camera.position);
+			tag.rotation.set(1.6,-0.8,0);
 		});
 		return tag;
 	};
 
 
 	var animCountry = function() {
+
 		TWEEN.removeAll();
 
 	/*	new TWEEN.Tween( container.position).to( { x: -200, y: 1800, z: 0 }, 2000)
 		.easing( TWEEN.Easing.Exponential.InOut )
 		.start();
+*/
+		new TWEEN.Tween( container.rotation).to( { x: -1.0, y: 0, z: 0.8 }, 2000).onUpdate(function(){  })
+		.start();
+		new TWEEN.Tween(camera.position).to({ x: 250, y: -1800, z: 2000 },2000).start()
+		//new TWEEN.Tween(camera.rotation).to( { x: 0, y: 0, z: -1.5}, 2000).start()
 
-		new TWEEN.Tween( container.rotation).to( { x: -1.0, y: 0, z: 0.8 }, 2000)
-		.easing( TWEEN.Easing.Exponential.InOut )
-		.start();*/
-		new TWEEN.Tween(camera.position).to({ x: -250, y: 200, z: 2500 },2000).start()
-		new TWEEN.Tween(camera.rotation).to( { x: 0, y: 0, z: 0}, 2000).start()
 	};
 
 	var adjust = function(i,object) {
@@ -224,3 +223,19 @@ function Map () {
 	animate();
 }
 var countryMap = new Map;
+
+countryMap.setTag(0,"weon");
+countryMap.setTag(1);
+countryMap.setTag(2);
+countryMap.setTag(3);
+countryMap.setTag(4);
+countryMap.setTag(5);
+countryMap.setTag(6,"fleto");
+countryMap.setTag(7);
+countryMap.setTag(8);
+countryMap.setTag(9);
+countryMap.setTag(10);
+countryMap.setTag(11);
+countryMap.setTag(12);
+countryMap.setTag(13);
+countryMap.setTag(14);

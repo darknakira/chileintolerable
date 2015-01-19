@@ -1,11 +1,9 @@
 var express = require('express')
   , app = express()
   , http = require('http')
-  , server = http.createServer(app)
-  ,Twit = require('twit')
+  , server = http.createServer(app).listen(3000)
+  , Twit = require('twit')
   , io = require('socket.io').listen(server);
-
-server.listen(3000);
 
 
 app.use("/css",  express.static(__dirname + '/public/css'));

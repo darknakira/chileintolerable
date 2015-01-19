@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['src/js/vendor/three.min.js','src/js/vendor/*.js','src/js/map.js','src/js/main.js'],
+                src: ['src/js/vendor/three.min.js','src/js/vendor/*.js','src/js/map.js','src/js/cloud.js','src/js/main.js'],
                 dest: 'public/js/main.js'
             }
         }
