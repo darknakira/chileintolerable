@@ -3485,7 +3485,7 @@ var words = new Cloud;;/**
  * Created by maeth on 11/2/14.
  */
 
-var socket = io.connect('127.0.0.1');
+var socket = io.connect('54.215.212.113');
 
 function ChileIntolerable() {
 	var hidden = false;
