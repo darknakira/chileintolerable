@@ -2,7 +2,7 @@
  * Created by maeth on 11/2/14.
  */
 
-var socket = io.connect('127.0.0.1:3000');
+var socket = io.connect('54.215.212.113');
 
 function ChileIntolerable() {
 

@@ -1,7 +1,7 @@
 var express = require('express')
   , app = express()
   , http = require('http')
-  , server = http.createServer(app).listen(3000)
+  , server = http.createServer(app).listen(80)
   , Twit = require('twit')
   , io = require('socket.io').listen(server);
 
