@@ -3325,15 +3325,17 @@ function ChileIntolerable() {
 
 		var map = document.getElementById('map');
 		map.style.top = window.innerHeight;
-		hidden = true;
+	
 	};
 
 
 	var showGraphs = function() {
-		
+
 	};
 
 	var showWordsTab = function() {
+		hidden = true;
+
 		$("#cloud").css('z-index', 9);
 		$("#cloud").animate({ top: 0 },1500,words.show);
 	};
@@ -3379,9 +3381,9 @@ function ChileIntolerable() {
 		hideWindows();
 		_setBindings();
 
-		window.addEventListener( 'resize', function() {  
-			hidden = false;
-			hideWindows();
+		window.addEventListener( 'resize', function() { 
+			if (!hidden)
+				hideWindows();
 		});
 		
 	};
