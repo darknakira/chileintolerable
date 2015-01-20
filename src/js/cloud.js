@@ -13,9 +13,61 @@ function Cloud () {
 		container.style.width = window.innerWidth;
 		container.style.height = window.innerHeight * 0.75;
 
+		window.addEventListener( 'resize', function() {  
+			parent.style.width = window.innerWidth;
+			parent.style.height = window.innerHeight;
+			container.style.width = window.innerWidth;
+			container.style.height = window.innerHeight * 0.75;
+			drawed = false;
+			draw();
+		}, false );
+
 
 		list();
+
+		setListener();
+
 	};
+
+
+	var setListener = function() {
+		
+		container.addEventListener("wordcloudstop", function() {
+			$("#cloudCanvas span").click(function() { 
+				// find element
+				var elem = $(this).text();
+				var index = selected.indexOf(elem);
+				if (index == -1) {
+					if (selected.length < 10) {
+						selected.push(elem);
+						selectedColors.push($(this).css('color'));
+						$(this).css('color',"#3399CC");
+						$(this).css('z-index', 10);
+					}
+				} else {
+					//de-select
+					selected.splice(index,1);
+					$(this).css('color',selectedColors[index]);
+					$(this).css('z-index', 0);
+					selectedColors.splice(index,1);
+				}
+
+				if (selected.length == 10) {
+					$(".blackbg").height(window.innerHeight - 90)
+					$(".blackbg").fadeIn("fast");
+				} else {
+					$(".blackbg").fadeOut("fast");
+				}
+				
+
+				if (selected.length > 0)
+					$("#goMapBtn").fadeIn();
+				else
+					$("#goMapBtn").fadeOut();
+
+			});
+		});
+	}
 
 
 	var list = function() {
@@ -177,44 +229,6 @@ function Cloud () {
 					var colors = ["#336666","#CCCCCC","#996666", "#660000", "#330000" ,"#666666", "##996633", "#CC9966","#663333"];
 				    return colors[Math.floor(Math.random()*colors.length)];
 				}
-			});
-
-			container.addEventListener("wordcloudstop", function() {
-				$("#cloudCanvas span").click(function() { 
-					// find element
-					var elem = $(this).text();
-					var index = selected.indexOf(elem);
-					if (index == -1) {
-						if (selected.length < 3) {
-							selected.push(elem);
-							selectedColors.push($(this).css('color'));
-							$(this).css('color',"#3399CC");
-							$(this).css('z-index', 10);
-						}
-					} else {
-						//de-select
-						selected.splice(index,1);
-						$(this).css('color',selectedColors[index]);
-						$(this).css('z-index', 0);
-						selectedColors.splice(index,1);
-					}
-
-					if (selected.length == 3) {
-						$(".blackbg").height(window.innerHeight - 90)
-						$(".blackbg").fadeIn("fast");
-					} else {
-						$(".blackbg").fadeOut("fast");
-					}
-					
-
-					if (selected.length > 0)
-						$("#goMapBtn").fadeIn();
-					else
-						$("#goMapBtn").fadeOut();
-
-				});
-
-
 			});
 		}
 	};

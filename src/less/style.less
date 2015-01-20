@@ -40,10 +40,19 @@ a {
 
 @import "icons.less";
 
+@media only screen and (max-device-width: 480px){
+  .sm-hide { display: none !important; }
+}
+
+.hide {
+	display: none;
+}
+
+
 input:not([type=submit]):not([type=file]) {
    /* omg so much cleaner */
-   color: #660000;
-    border: 5px solid white; 
+   color: #FFF;
+    /*border: 5px solid white; */
 	-webkit-box-shadow: 
 	  inset 0 0 8px  rgba(0,0,0,0.1),
 	        0 0 16px rgba(0,0,0,0.1); 
@@ -53,7 +62,7 @@ input:not([type=submit]):not([type=file]) {
 	box-shadow: 
 	  inset 0 0 8px  rgba(0,0,0,0.1),
 	        0 0 16px rgba(0,0,0,0.1); 
-	padding: 15px;
+	padding: 0px;
 	background: rgba(255,255,255,0.5);
 	margin: 0 0 10px 0;
 	-webkit-border-radius: 4px;
@@ -119,16 +128,27 @@ body {
 	#addBar {
 		background: #666;
 		height: 50px;
+		z-index: 99999;
 		.left {
 			margin-top: 10px;
 			margin-left: 15px;
 		}
 
 		.right {
+
 			#goMapBtn {
+				span {
+					color: #ff9900 !important;
+				}
 				display: none;
+				margin-right: 20px;
+				.icon {
+					margin-left: 15px;
+					color: #ff9900;
+				}
 			}
-			margin-top: 25px;
+
+			margin-top: 10px;
 			margin-right: 50px;
 		}
 
@@ -141,7 +161,7 @@ body {
 		}
 
 		input {
-			font-size: 25px;
+			font-size: 20px;
 		}	
 
 		
@@ -153,7 +173,7 @@ body {
 			width: 100%;
 			height: 100%;
 			position: absolute;
-			top: 90px;
+			top: 50px;
 			background-color:rgba(0,0,0,0.8);
 	}
 
@@ -175,6 +195,8 @@ body {
 .bottom { 
 	bottom: 0;
 }
+
+
 
 
 
@@ -295,5 +317,10 @@ body {
 	.handle {
 		display: none;
 		height: 80px;
+
+		.tools {
+			margin-right: 100px;
+			margin-top: 20px;
+		}
 	}
 }

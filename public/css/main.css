@@ -48,14 +48,22 @@ a {
 .icon:hover {
   color: #ff9900;
 }
+@media only screen and (max-device-width: 480px) {
+  .sm-hide {
+    display: none !important;
+  }
+}
+.hide {
+  display: none;
+}
 input:not([type=submit]):not([type=file]) {
   /* omg so much cleaner */
-  color: #660000;
-  border: 5px solid white;
+  color: #FFF;
+  /*border: 5px solid white; */
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-  padding: 15px;
+  padding: 0px;
   background: rgba(255, 255, 255, 0.5);
   margin: 0 0 10px 0;
   -webkit-border-radius: 4px;
@@ -109,17 +117,26 @@ body {
 #cloud #addBar {
   background: #666;
   height: 50px;
+  z-index: 99999;
 }
 #cloud #addBar .left {
   margin-top: 10px;
   margin-left: 15px;
 }
 #cloud #addBar .right {
-  margin-top: 25px;
+  margin-top: 10px;
   margin-right: 50px;
 }
 #cloud #addBar .right #goMapBtn {
   display: none;
+  margin-right: 20px;
+}
+#cloud #addBar .right #goMapBtn span {
+  color: #ff9900 !important;
+}
+#cloud #addBar .right #goMapBtn .icon {
+  margin-left: 15px;
+  color: #ff9900;
 }
 #cloud #addBar span,
 #cloud #addBar a {
@@ -130,7 +147,7 @@ body {
   font-weight: 200;
 }
 #cloud #addBar input {
-  font-size: 25px;
+  font-size: 20px;
 }
 #cloud .blackbg {
   display: none;
@@ -138,7 +155,7 @@ body {
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 90px;
+  top: 50px;
   background-color: rgba(0, 0, 0, 0.8);
 }
 #cloud #cloudCanvas {
@@ -255,4 +272,8 @@ body {
 #map .handle {
   display: none;
   height: 80px;
+}
+#map .handle .tools {
+  margin-right: 100px;
+  margin-top: 20px;
 }

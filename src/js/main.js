@@ -5,14 +5,22 @@
 var socket = io.connect('54.215.212.113');
 
 function ChileIntolerable() {
-
+	var hidden = false;
 
 	var hideWindows = function() {
+
+
 		var cloud = document.getElementById('cloud');
 		cloud.style.top = -window.innerHeight;
 
 		var map = document.getElementById('map');
 		map.style.top = window.innerHeight;
+		hidden = true;
+	};
+
+
+	var showGraphs = function() {
+		
 	};
 
 	var showWordsTab = function() {
@@ -53,12 +61,18 @@ function ChileIntolerable() {
 		$("#logo").click(showWordsTab);
 		$("#cloud .bar").click(hideWordsTab);
 		$("#goMapBtn").click(showMap);
+		$("#showGraphsBtn").click(showGraphs);
 	};
 
 
 	var _init = function() { 
 		hideWindows();
 		_setBindings();
+
+		window.addEventListener( 'resize', function() {  
+			hidden = false;
+			hideWindows();
+		});
 		
 	};
 

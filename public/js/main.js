@@ -1,4 +1,4 @@
-/*! chileintolerable 2015-01-19 */
+/*! chileintolerable 2015-01-20 */
 // threejs.org/license
 'use strict';var THREE={REVISION:"70"};"object"===typeof module&&(module.exports=THREE);void 0===Math.sign&&(Math.sign=function(a){return 0>a?-1:0<a?1:0});THREE.MOUSE={LEFT:0,MIDDLE:1,RIGHT:2};THREE.CullFaceNone=0;THREE.CullFaceBack=1;THREE.CullFaceFront=2;THREE.CullFaceFrontBack=3;THREE.FrontFaceDirectionCW=0;THREE.FrontFaceDirectionCCW=1;THREE.BasicShadowMap=0;THREE.PCFShadowMap=1;THREE.PCFSoftShadowMap=2;THREE.FrontSide=0;THREE.BackSide=1;THREE.DoubleSide=2;THREE.NoShading=0;
 THREE.FlatShading=1;THREE.SmoothShading=2;THREE.NoColors=0;THREE.FaceColors=1;THREE.VertexColors=2;THREE.NoBlending=0;THREE.NormalBlending=1;THREE.AdditiveBlending=2;THREE.SubtractiveBlending=3;THREE.MultiplyBlending=4;THREE.CustomBlending=5;THREE.AddEquation=100;THREE.SubtractEquation=101;THREE.ReverseSubtractEquation=102;THREE.MinEquation=103;THREE.MaxEquation=104;THREE.ZeroFactor=200;THREE.OneFactor=201;THREE.SrcColorFactor=202;THREE.OneMinusSrcColorFactor=203;THREE.SrcAlphaFactor=204;
@@ -3078,9 +3078,61 @@ if (!window.clearImmediate) {
 		container.style.width = window.innerWidth;
 		container.style.height = window.innerHeight * 0.75;
 
+		window.addEventListener( 'resize', function() {  
+			parent.style.width = window.innerWidth;
+			parent.style.height = window.innerHeight;
+			container.style.width = window.innerWidth;
+			container.style.height = window.innerHeight * 0.75;
+			drawed = false;
+			draw();
+		}, false );
+
 
 		list();
+
+		setListener();
+
 	};
+
+
+	var setListener = function() {
+		
+		container.addEventListener("wordcloudstop", function() {
+			$("#cloudCanvas span").click(function() { 
+				// find element
+				var elem = $(this).text();
+				var index = selected.indexOf(elem);
+				if (index == -1) {
+					if (selected.length < 10) {
+						selected.push(elem);
+						selectedColors.push($(this).css('color'));
+						$(this).css('color',"#3399CC");
+						$(this).css('z-index', 10);
+					}
+				} else {
+					//de-select
+					selected.splice(index,1);
+					$(this).css('color',selectedColors[index]);
+					$(this).css('z-index', 0);
+					selectedColors.splice(index,1);
+				}
+
+				if (selected.length == 10) {
+					$(".blackbg").height(window.innerHeight - 90)
+					$(".blackbg").fadeIn("fast");
+				} else {
+					$(".blackbg").fadeOut("fast");
+				}
+				
+
+				if (selected.length > 0)
+					$("#goMapBtn").fadeIn();
+				else
+					$("#goMapBtn").fadeOut();
+
+			});
+		});
+	}
 
 
 	var list = function() {
@@ -3243,44 +3295,6 @@ if (!window.clearImmediate) {
 				    return colors[Math.floor(Math.random()*colors.length)];
 				}
 			});
-
-			container.addEventListener("wordcloudstop", function() {
-				$("#cloudCanvas span").click(function() { 
-					// find element
-					var elem = $(this).text();
-					var index = selected.indexOf(elem);
-					if (index == -1) {
-						if (selected.length < 3) {
-							selected.push(elem);
-							selectedColors.push($(this).css('color'));
-							$(this).css('color',"#3399CC");
-							$(this).css('z-index', 10);
-						}
-					} else {
-						//de-select
-						selected.splice(index,1);
-						$(this).css('color',selectedColors[index]);
-						$(this).css('z-index', 0);
-						selectedColors.splice(index,1);
-					}
-
-					if (selected.length == 3) {
-						$(".blackbg").height(window.innerHeight - 90)
-						$(".blackbg").fadeIn("fast");
-					} else {
-						$(".blackbg").fadeOut("fast");
-					}
-					
-
-					if (selected.length > 0)
-						$("#goMapBtn").fadeIn();
-					else
-						$("#goMapBtn").fadeOut();
-
-				});
-
-
-			});
 		}
 	};
 
@@ -3301,14 +3315,22 @@ var words = new Cloud;;/**
 var socket = io.connect('54.215.212.113');
 
 function ChileIntolerable() {
-
+	var hidden = false;
 
 	var hideWindows = function() {
+
+
 		var cloud = document.getElementById('cloud');
 		cloud.style.top = -window.innerHeight;
 
 		var map = document.getElementById('map');
 		map.style.top = window.innerHeight;
+		hidden = true;
+	};
+
+
+	var showGraphs = function() {
+		
 	};
 
 	var showWordsTab = function() {
@@ -3349,12 +3371,18 @@ function ChileIntolerable() {
 		$("#logo").click(showWordsTab);
 		$("#cloud .bar").click(hideWordsTab);
 		$("#goMapBtn").click(showMap);
+		$("#showGraphsBtn").click(showGraphs);
 	};
 
 
 	var _init = function() { 
 		hideWindows();
 		_setBindings();
+
+		window.addEventListener( 'resize', function() {  
+			hidden = false;
+			hideWindows();
+		});
 		
 	};
 

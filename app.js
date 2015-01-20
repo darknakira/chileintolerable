@@ -13,6 +13,8 @@ app.use("/js", express.static(__dirname + '/public/js'));
 // routing
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 });
 
 var T = new Twit({
