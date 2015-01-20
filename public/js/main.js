@@ -3485,7 +3485,7 @@ var words = new Cloud;;/**
  * Created by maeth on 11/2/14.
  */
 
-var socket = io.connect('54.215.212.113');
+var socket = io.connect('127.0.0.1');
 
 function ChileIntolerable() {
 	var hidden = false;
@@ -3539,9 +3539,8 @@ function ChileIntolerable() {
 		$("#cloud").animate({ top: -window.innerHeight},1500);
 	};
 	var showMap = function() {
-
-
 		$("#logo").hide();
+		$("#tweetd").hide();
 		$("#cloud .handle .bar .up").addClass("down");
 		$("#cloud .handle .bar .up").removeClass("up");
 		
@@ -3580,9 +3579,20 @@ function ChileIntolerable() {
 	};
 
 
+	var runBg = function() {
+
+		socket.emit('home',true);
+		socket.on("bg", function(text) { 
+			console.log(text);
+			$("#tweetd").append(text + "</br>");
+		});
+	};
+
+
 	var _init = function() { 
 		hideWindows();
 		_setBindings();
+		runBg();
 
 		window.addEventListener( 'resize', function() { 
 			if (!hidden)
