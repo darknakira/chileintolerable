@@ -1,15 +1,15 @@
 function Map () {
-	
+
 	var camera, scene, renderer;
-	var controls, objects, tags;
+	var controls, objects;
 	var lastTimeMsec= null
 	var nowMsec = null
 	var onRenderFcts = [];
 	var container = new THREE.Object3D();
-	var tags = new THREE.Object3D();
-
+	var filter_tags = null;
 
 	var init = function() {
+
 		objects = [];
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 		camera.position.z = 3600;
@@ -25,35 +25,50 @@ function Map () {
 		
 		//
 
-/*		controls   = new THREE.OrbitControls(camera);
-		controls.noPan = true;
-*/
+//		controls   = new THREE.OrbitControls(camera);
+//		controls.noPan = true;
+
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		createLand();
 
-		scene.add(tags);
-		//var socket = io.connect('192.168.0.26:3000');
-
+		socket.on('stream', function(tweet){
+			setTag(parseInt(Math.random() * 10) + 1, tweet);
+		});
 	};
 
 
-	this.setTag = function(pos,keyword) {
+	this.setFilters = function( filters ) { 
+		filter_tags = filters;
+		socket.emit("filter",filter_tags);
+	};
 
 
+	var setTag = function(pos,tweet) {
 		var element = document.createElement( 'div' );
-		element.className = 'tag';
-		element.textContent = keyword;		
+		element.className = 'marker';
+		element.textContent = tweet.keyword;
 
 		var tag = new THREE.CSS3DObject( element );
 		tag.position.set(objects[pos].position.x , objects[pos].position.y, objects[pos].position.z + 50);
 		
 		container.add(tag);
 
+
+		setTimeout(function() { 
+			tag.visible = false;
+			$(tag.element).fadeOut();
+			scene.remove(tag);
+		},5000);
+
 		onRenderFcts.push(function(delta, now){
 			tag.lookAt(camera.position);
 			tag.rotation.set(1.6,-0.8,0);
 		});
+
+
+		$("#tweetText").append("<li>" + tweet.text + "</li>");
+
 		return tag;
 	};
 
@@ -62,14 +77,9 @@ function Map () {
 
 		TWEEN.removeAll();
 
-	/*	new TWEEN.Tween( container.position).to( { x: -200, y: 1800, z: 0 }, 2000)
-		.easing( TWEEN.Easing.Exponential.InOut )
-		.start();
-*/
 		new TWEEN.Tween( container.rotation).to( { x: -1.0, y: 0, z: 0.8 }, 2000).onUpdate(function(){  })
 		.start();
 		new TWEEN.Tween(camera.position).to({ x: 250, y: -1800, z: 2000 },2000).start()
-		//new TWEEN.Tween(camera.rotation).to( { x: 0, y: 0, z: -1.5}, 2000).start()
 
 	};
 
@@ -173,9 +183,13 @@ function Map () {
 			object.position.y = ((i * 200) * -1) + 2000;
 			object.position.z = -1700;
 
-			object.element.addEventListener("click", function(event) { console.log("click!", event);  });
-
 			adjust(i,object);
+
+			object.element.addEventListener("click", function(event) { 
+				var vector = new THREE.Vector3({ x: object.position.x , y: object.position.y , z: object.position.z });
+				//vector.setFromMatrixPosition( object.matrixWorld );
+				camera.lookAt(vector);
+			});
 
 			
 			objects.push( object );
@@ -204,9 +218,9 @@ function Map () {
 		renderer.render( scene, camera);
 	});
 
-	var animate = function() {
+	var render = function() {
 
-		requestAnimationFrame( animate );
+		requestAnimationFrame( render );
 		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
 		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
 		lastTimeMsec	= nowMsec
@@ -218,24 +232,8 @@ function Map () {
 	};
 	
 	this.show = animCountry;
+	this.setTag = setTag;
 
 	init();
-	animate();
-}
-var countryMap = new Map;
-
-countryMap.setTag(0,"weon");
-countryMap.setTag(1);
-countryMap.setTag(2);
-countryMap.setTag(3);
-countryMap.setTag(4);
-countryMap.setTag(5);
-countryMap.setTag(6,"fleto");
-countryMap.setTag(7);
-countryMap.setTag(8);
-countryMap.setTag(9);
-countryMap.setTag(10);
-countryMap.setTag(11);
-countryMap.setTag(12);
-countryMap.setTag(13);
-countryMap.setTag(14);
+	render();
+};

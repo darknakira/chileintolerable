@@ -825,9 +825,6 @@ f!==d.currentFrame&&(this.morphTargetInfluences[d.lastFrame]=0,this.morphTargetI
  * @author mrdoob / http://mrdoob.com/
  */
 
-
-var THREE = THREE || {};
-
 THREE.CSS3DObject = function ( element ) {
 
 	THREE.Object3D.call( this );
@@ -848,7 +845,6 @@ THREE.CSS3DObject = function ( element ) {
 };
 
 THREE.CSS3DObject.prototype = Object.create( THREE.Object3D.prototype );
-THREE.CSS3DObject.prototype.constructor = THREE.CSS3DObject;
 
 THREE.CSS3DSprite = function ( element ) {
 
@@ -857,7 +853,6 @@ THREE.CSS3DSprite = function ( element ) {
 };
 
 THREE.CSS3DSprite.prototype = Object.create( THREE.CSS3DObject.prototype );
-THREE.CSS3DSprite.prototype.constructor = THREE.CSS3DSprite;
 
 //
 
@@ -2831,17 +2826,17 @@ if (!window.clearImmediate) {
   }
 
 })(window);;function Map () {
-	
+
 	var camera, scene, renderer;
-	var controls, objects, tags;
+	var controls, objects;
 	var lastTimeMsec= null
 	var nowMsec = null
 	var onRenderFcts = [];
 	var container = new THREE.Object3D();
-	var tags = new THREE.Object3D();
-
+	var filter_tags = null;
 
 	var init = function() {
+
 		objects = [];
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 		camera.position.z = 3600;
@@ -2857,35 +2852,50 @@ if (!window.clearImmediate) {
 		
 		//
 
-/*		controls   = new THREE.OrbitControls(camera);
-		controls.noPan = true;
-*/
+//		controls   = new THREE.OrbitControls(camera);
+//		controls.noPan = true;
+
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		createLand();
 
-		scene.add(tags);
-		//var socket = io.connect('192.168.0.26:3000');
-
+		socket.on('stream', function(tweet){
+			setTag(parseInt(Math.random() * 10) + 1, tweet);
+		});
 	};
 
 
-	this.setTag = function(pos,keyword) {
+	this.setFilters = function( filters ) { 
+		filter_tags = filters;
+		socket.emit("filter",filter_tags);
+	};
 
 
+	var setTag = function(pos,tweet) {
 		var element = document.createElement( 'div' );
-		element.className = 'tag';
-		element.textContent = keyword;		
+		element.className = 'marker';
+		element.textContent = tweet.keyword;
 
 		var tag = new THREE.CSS3DObject( element );
 		tag.position.set(objects[pos].position.x , objects[pos].position.y, objects[pos].position.z + 50);
 		
 		container.add(tag);
 
+
+		setTimeout(function() { 
+			tag.visible = false;
+			$(tag.element).fadeOut();
+			scene.remove(tag);
+		},5000);
+
 		onRenderFcts.push(function(delta, now){
 			tag.lookAt(camera.position);
 			tag.rotation.set(1.6,-0.8,0);
 		});
+
+
+		$("#tweetText").append("<li>" + tweet.text + "</li>");
+
 		return tag;
 	};
 
@@ -2894,14 +2904,9 @@ if (!window.clearImmediate) {
 
 		TWEEN.removeAll();
 
-	/*	new TWEEN.Tween( container.position).to( { x: -200, y: 1800, z: 0 }, 2000)
-		.easing( TWEEN.Easing.Exponential.InOut )
-		.start();
-*/
 		new TWEEN.Tween( container.rotation).to( { x: -1.0, y: 0, z: 0.8 }, 2000).onUpdate(function(){  })
 		.start();
 		new TWEEN.Tween(camera.position).to({ x: 250, y: -1800, z: 2000 },2000).start()
-		//new TWEEN.Tween(camera.rotation).to( { x: 0, y: 0, z: -1.5}, 2000).start()
 
 	};
 
@@ -3005,9 +3010,13 @@ if (!window.clearImmediate) {
 			object.position.y = ((i * 200) * -1) + 2000;
 			object.position.z = -1700;
 
-			object.element.addEventListener("click", function(event) { console.log("click!", event);  });
-
 			adjust(i,object);
+
+			object.element.addEventListener("click", function(event) { 
+				var vector = new THREE.Vector3({ x: object.position.x , y: object.position.y , z: object.position.z });
+				//vector.setFromMatrixPosition( object.matrixWorld );
+				camera.lookAt(vector);
+			});
 
 			
 			objects.push( object );
@@ -3036,9 +3045,9 @@ if (!window.clearImmediate) {
 		renderer.render( scene, camera);
 	});
 
-	var animate = function() {
+	var render = function() {
 
-		requestAnimationFrame( animate );
+		requestAnimationFrame( render );
 		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
 		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
 		lastTimeMsec	= nowMsec
@@ -3050,27 +3059,11 @@ if (!window.clearImmediate) {
 	};
 	
 	this.show = animCountry;
+	this.setTag = setTag;
 
 	init();
-	animate();
-}
-var countryMap = new Map;
-
-countryMap.setTag(0,"weon");
-countryMap.setTag(1);
-countryMap.setTag(2);
-countryMap.setTag(3);
-countryMap.setTag(4);
-countryMap.setTag(5);
-countryMap.setTag(6,"fleto");
-countryMap.setTag(7);
-countryMap.setTag(8);
-countryMap.setTag(9);
-countryMap.setTag(10);
-countryMap.setTag(11);
-countryMap.setTag(12);
-countryMap.setTag(13);
-countryMap.setTag(14);;function Cloud () {
+	render();
+};;function Cloud () {
 	var container = null;
 	var	items = [];
 	var selected = [];	
@@ -3095,47 +3088,48 @@ countryMap.setTag(14);;function Cloud () {
 		items = [["vestido de novia en la cartera",22],
 		["al 3 y al 4",17],
 		["al tres y al cuatro",45],
-		["aplaplac",400],
+		["aplaplac",40],
 		["a todo cachete",8],
 		["bagallo",25],
 		["bachicha",20],
 		["burrero",75],
 		["brujo",85],
-		["bruto",97],
+		["bruto",60],
 		["cachudo",80],
 		["se le cae el helado",30],
-		["cabeza de rodilla",150],
-		["cabro chico",150],
-		["cafiche",220],
-		["califa",158],
-		["canuto",180],
+		["cabeza de rodilla",10],
+		["cabro chico",60],
+		["cafiche",60],
+		["califa",55],
+		["canuto",40],
 		["cantimplora",55],
-		["cartucho",280],
+		["cartucho",60],
 		["cuentero",95],
-		["cuico",1003],
+		["cuico",110],
 		["cuyano",75],
 		["chamullento",88],
-		["chancho",209],
+		["chancho",60],
 		["chancletero",33],
-		["chanta",400],
-		["vuelta la chaqueta",233],
+		["chanta",80],
+		["vuelta la chaqueta",30],
 		["che",100],
 		["china",99],
 		["chino",56],
 		["chiporro",45],
-		["choro",356],
-		["choro canero",120],
+		["choro",120],
+		["choro canero",50],
 		["choros de esquina",129],
-		["chula",700],
-		["del ambiente",88],
+		["chula",60],
+		["del ambiente",20],
 		["domestico",12],
 		["duro",95],
 		["encalillado",300],
 		["encanado",32],
-		["en la pitilla",471],
+		["weon",200],
+		["en la pitilla",70],
 		["esta en la cuerea",30],
-		["flayte",1089],
-		["fleto",2005],
+		["flayte",170],
+		["fleto",170],
 		["franchute",100],
 		["fresco raja",2],
 		["gallo",30],
@@ -3162,9 +3156,9 @@ countryMap.setTag(14);;function Cloud () {
 		["malandra",30],
 		["mandril",30],
 		["mano challa",30],
-		["maraca",30],
+		["maraca",170],
 		["mariposon",30],
-		["maricon",30],
+		["maricon",140],
 		["matasanos",30],
 		["matusalen",30],
 		["mea contra viento",30],
@@ -3202,7 +3196,7 @@ countryMap.setTag(14);;function Cloud () {
 		["rata",30],
 		["rati",30],
 		["resfalin de piojos",30],
-		["roto",30],
+		["roto",90],
 		["se le cae",30],
 		["se le cae la pelota al barro",30],
 		["da vuelta el paragua",30],
@@ -3225,9 +3219,9 @@ countryMap.setTag(14);;function Cloud () {
 		["vacuna",30],
 		["vagoneta",30],
 		["viejo verde",30],
-		["yegua",30],
+		["yegua",130],
 		["yira",30],
-		["zorra",30]];	
+		["zorra",140]];	
 
 
 		return items;
@@ -3242,11 +3236,11 @@ countryMap.setTag(14);;function Cloud () {
 				gridSize: Math.round(32 * (window.innerWidth / 4) / 1024),
 				list: items,
 				fontFamily: 'Times, serif', 
-				minSize: 30,
+				minSize: 12,
 				rotateRatio: 0.5,
 				color: function (word, weight) {
-					var colors = ["#CCCCCC","#996666", "#660000", "#330000" ,"#666666", "##996633", "#CC9966","#663333"];
-				    return (weight > 150) ? '#336666' : colors[Math.floor(Math.random()*colors.length)];
+					var colors = ["#336666","#CCCCCC","#996666", "#660000", "#330000" ,"#666666", "##996633", "#CC9966","#663333"];
+				    return colors[Math.floor(Math.random()*colors.length)];
 				}
 			});
 
@@ -3271,11 +3265,18 @@ countryMap.setTag(14);;function Cloud () {
 					}
 
 					if (selected.length == 3) {
+						$(".blackbg").height(window.innerHeight - 90)
 						$(".blackbg").fadeIn("fast");
 					} else {
 						$(".blackbg").fadeOut("fast");
 					}
 					
+
+					if (selected.length > 0)
+						$("#goMapBtn").fadeIn();
+					else
+						$("#goMapBtn").fadeOut();
+
 				});
 
 
@@ -3284,10 +3285,7 @@ countryMap.setTag(14);;function Cloud () {
 	};
 
 
-	var bindings = function() {
-
-
-	};
+	this.filters = selected;
 
 	this.show = draw;
 
@@ -3300,7 +3298,10 @@ var words = new Cloud;;/**
  * Created by maeth on 11/2/14.
  */
 
+var socket = io.connect('127.0.0.1:3000');
+
 function ChileIntolerable() {
+
 
 	var hideWindows = function() {
 		var cloud = document.getElementById('cloud');
@@ -3321,14 +3322,27 @@ function ChileIntolerable() {
 	};
 	var showMap = function() {
 		$("#logo").hide();
-		$("#cloud").animate({ top: -window.innerHeight},1500,function() { 
-			$("#map").animate({ top: 0 },1500,countryMap.show);
+		$("#cloud .handle .bar .up").toggleClass("down");
+		$("#cloud").animate({ top: -window.innerHeight + 30},1500,function() {
+			var rtMap = new Map;
+
+			rtMap.setFilters(words.filters);
+			
+			$("#map").animate({ top: 0 },1500,function() { 
+				
+				$("#map .handle").css('bottom',-window.innerHeight);
+
+				$("#map .handle").fadeIn('fast');
+				rtMap.show() 
+
+
+			});
 		});
 	};
 
 	var hideMap = function() {
 		$("#map").animate({ top: window.innerHeight },1500);
-	}
+	};
 
 
 	var _setBindings = function() {
@@ -3343,7 +3357,6 @@ function ChileIntolerable() {
 		_setBindings();
 		
 	};
-
 
 
 	_init();

@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Chile Intolerable</title>
-		<script src="http://192.168.0.6:3000/socket.io/socket.io.js"></script>
+		<script src="socket.io/socket.io.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 	</head>
@@ -18,9 +18,14 @@
 		</div>
 		<div id="cloud" class="window">
 			<div id="addBar"> 
-				<span>&nbsp;Agrega tu frase o eufemismo&nbsp;</span>
-				<input id="addFrase" type="text"></input>
-				<button id="goMapBtn">Ir al mapa</button>
+				<div class="left">
+					<span>&nbsp;Selecciona maximo 3 frases o eufemismos</span>
+				</div>
+				<div class="right">
+					<a href="#map" id="goMapBtn" title="Ver mapa con estos filtros">Ver mapa con estos filtros<span class="icon icon-map"></span></a>
+					<!-- <span>&nbsp;Agrega el tuyo&nbsp;</span>
+					<input id="addFrase" type="text"></input> -->
+				</div>
 			</div>
 			<div class="blackbg"></div>
 			<div id="cloudCanvas">
@@ -32,10 +37,13 @@
 			</div>
 		</div>
 		<div id="map" class="window">
+			<div id="tweetText"></div>
+			<div class="handle bottom large">
+				<a href="#" /><span class="icon icon-stats-bars"></span></a>
+			</div>
 		</div>
 
 		<div id="graph" class="window">
-
 		</div>		
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

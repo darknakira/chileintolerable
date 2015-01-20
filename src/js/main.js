@@ -2,7 +2,10 @@
  * Created by maeth on 11/2/14.
  */
 
+var socket = io.connect('127.0.0.1:3000');
+
 function ChileIntolerable() {
+
 
 	var hideWindows = function() {
 		var cloud = document.getElementById('cloud');
@@ -23,14 +26,27 @@ function ChileIntolerable() {
 	};
 	var showMap = function() {
 		$("#logo").hide();
-		$("#cloud").animate({ top: -window.innerHeight},1500,function() { 
-			$("#map").animate({ top: 0 },1500,countryMap.show);
+		$("#cloud .handle .bar .up").toggleClass("down");
+		$("#cloud").animate({ top: -window.innerHeight + 30},1500,function() {
+			var rtMap = new Map;
+
+			rtMap.setFilters(words.filters);
+			
+			$("#map").animate({ top: 0 },1500,function() { 
+				
+				$("#map .handle").css('bottom',-window.innerHeight);
+
+				$("#map .handle").fadeIn('fast');
+				rtMap.show() 
+
+
+			});
 		});
 	};
 
 	var hideMap = function() {
 		$("#map").animate({ top: window.innerHeight },1500);
-	}
+	};
 
 
 	var _setBindings = function() {
@@ -45,7 +61,6 @@ function ChileIntolerable() {
 		_setBindings();
 		
 	};
-
 
 
 	_init();

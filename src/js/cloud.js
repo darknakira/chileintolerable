@@ -23,47 +23,48 @@ function Cloud () {
 		items = [["vestido de novia en la cartera",22],
 		["al 3 y al 4",17],
 		["al tres y al cuatro",45],
-		["aplaplac",400],
+		["aplaplac",40],
 		["a todo cachete",8],
 		["bagallo",25],
 		["bachicha",20],
 		["burrero",75],
 		["brujo",85],
-		["bruto",97],
+		["bruto",60],
 		["cachudo",80],
 		["se le cae el helado",30],
-		["cabeza de rodilla",150],
-		["cabro chico",150],
-		["cafiche",220],
-		["califa",158],
-		["canuto",180],
+		["cabeza de rodilla",10],
+		["cabro chico",60],
+		["cafiche",60],
+		["califa",55],
+		["canuto",40],
 		["cantimplora",55],
-		["cartucho",280],
+		["cartucho",60],
 		["cuentero",95],
-		["cuico",1003],
+		["cuico",110],
 		["cuyano",75],
 		["chamullento",88],
-		["chancho",209],
+		["chancho",60],
 		["chancletero",33],
-		["chanta",400],
-		["vuelta la chaqueta",233],
+		["chanta",80],
+		["vuelta la chaqueta",30],
 		["che",100],
 		["china",99],
 		["chino",56],
 		["chiporro",45],
-		["choro",356],
-		["choro canero",120],
+		["choro",120],
+		["choro canero",50],
 		["choros de esquina",129],
-		["chula",700],
-		["del ambiente",88],
+		["chula",60],
+		["del ambiente",20],
 		["domestico",12],
 		["duro",95],
 		["encalillado",300],
 		["encanado",32],
-		["en la pitilla",471],
+		["weon",200],
+		["en la pitilla",70],
 		["esta en la cuerea",30],
-		["flayte",1089],
-		["fleto",2005],
+		["flayte",170],
+		["fleto",170],
 		["franchute",100],
 		["fresco raja",2],
 		["gallo",30],
@@ -90,9 +91,9 @@ function Cloud () {
 		["malandra",30],
 		["mandril",30],
 		["mano challa",30],
-		["maraca",30],
+		["maraca",170],
 		["mariposon",30],
-		["maricon",30],
+		["maricon",140],
 		["matasanos",30],
 		["matusalen",30],
 		["mea contra viento",30],
@@ -130,7 +131,7 @@ function Cloud () {
 		["rata",30],
 		["rati",30],
 		["resfalin de piojos",30],
-		["roto",30],
+		["roto",90],
 		["se le cae",30],
 		["se le cae la pelota al barro",30],
 		["da vuelta el paragua",30],
@@ -153,9 +154,9 @@ function Cloud () {
 		["vacuna",30],
 		["vagoneta",30],
 		["viejo verde",30],
-		["yegua",30],
+		["yegua",130],
 		["yira",30],
-		["zorra",30]];	
+		["zorra",140]];	
 
 
 		return items;
@@ -170,11 +171,11 @@ function Cloud () {
 				gridSize: Math.round(32 * (window.innerWidth / 4) / 1024),
 				list: items,
 				fontFamily: 'Times, serif', 
-				minSize: 30,
+				minSize: 12,
 				rotateRatio: 0.5,
 				color: function (word, weight) {
-					var colors = ["#CCCCCC","#996666", "#660000", "#330000" ,"#666666", "##996633", "#CC9966","#663333"];
-				    return (weight > 150) ? '#336666' : colors[Math.floor(Math.random()*colors.length)];
+					var colors = ["#336666","#CCCCCC","#996666", "#660000", "#330000" ,"#666666", "##996633", "#CC9966","#663333"];
+				    return colors[Math.floor(Math.random()*colors.length)];
 				}
 			});
 
@@ -199,11 +200,18 @@ function Cloud () {
 					}
 
 					if (selected.length == 3) {
+						$(".blackbg").height(window.innerHeight - 90)
 						$(".blackbg").fadeIn("fast");
 					} else {
 						$(".blackbg").fadeOut("fast");
 					}
 					
+
+					if (selected.length > 0)
+						$("#goMapBtn").fadeIn();
+					else
+						$("#goMapBtn").fadeOut();
+
 				});
 
 
@@ -212,10 +220,7 @@ function Cloud () {
 	};
 
 
-	var bindings = function() {
-
-
-	};
+	this.filters = selected;
 
 	this.show = draw;
 
