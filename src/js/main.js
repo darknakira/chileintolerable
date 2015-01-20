@@ -97,9 +97,19 @@ function ChileIntolerable() {
 	};
 
 
+	var runBg = function() {
+
+		socket.emit('home',true);
+		socket.on("bg", function(text) { 
+			$("#tweetd").append(text + "</br>");
+		});
+	};
+
+
 	var _init = function() { 
 		hideWindows();
 		_setBindings();
+		runBg();
 
 		window.addEventListener( 'resize', function() { 
 			if (!hidden)
