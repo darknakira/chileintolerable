@@ -41,13 +41,47 @@
 		<div id="map" class="window">
 			<div id="tweetText"></div>
 			<div class="handle bottom large">
-				<div class="tools right"><a id="showGraphsBtn" href="#graph" /><span class="icon icon-stats-bars"></span></a></div>
+				<div class="tools left">
+					 <nav id="nav">
+				        <li>Base Segmentaci&oacute;n
+				            <ul>
+				                <li>Geografica</li>
+				                <li>Conductual</li>
+				                <li>Psicografica</li>
+				                <li>Demografica</li>
+				            </ul>
+				        </li>
+				        <li>Variable Segmentaci&oacute;n
+				        	<ul>
+				                <li>Region del mundo</li>
+				                <li>Pais</li>
+				            </ul>
+				        </li>
+				        <li>Eufemismo
+				        	<ul>
+				                <li>Gringo</li>
+				                <li>Franchute</li>
+				                <li>Bachicha</li>
+				                <li>Co&ntilde;o</li>
+				                <li>Espa&ntilde;ica</li>
+				                <li>Paitoco</li>
+				                <li>Cuyano</li>
+				                <li>Ch&eacute;</li>
+				            </ul>
+				        </li>
+				    </nav>
+				</div>
+				<div class="tools right">
+					<a href="#share" /><span class="icon icon-share2"></span></a>&nbsp;
+					<a href="#download" /><span class="icon icon-box-add"></span></a>&nbsp;
+					<a id="showMapBtn" href="#map" /><span class="icon icon-map"></span></a>&nbsp;
+					<a id="showGraphsBtn" href="#graph" /><span class="icon icon-stats-bars"></span></a>&nbsp;
+				</div>
 			</div>
 		</div>
-
 		<div id="graph" class="window">
-
-		</div>		
+			<canvas id="graphCanvas" width="800" height="600"></canvas>
+		</div>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 </html>

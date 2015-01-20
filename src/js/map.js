@@ -21,6 +21,7 @@ function Map () {
 		renderer = new THREE.CSS3DRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.domElement.style.position = 'absolute';
+		renderer.domElement.className = "mapCanvas";
 		document.getElementById( 'map' ).appendChild( renderer.domElement );
 		
 		//
@@ -67,8 +68,7 @@ function Map () {
 		});
 
 
-		$("#tweetText").append("<li>" + tweet.text + "</li>");
-
+		$("#tweetText").prepend("<li>" + tweet.text + "</li>");
 		return tag;
 	};
 
@@ -232,8 +232,8 @@ function Map () {
 	};
 	
 	this.show = animCountry;
+	this.render = render;
 	this.setTag = setTag;
 
 	init();
-	render();
 };

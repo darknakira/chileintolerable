@@ -179,6 +179,7 @@ body {
 
 	#cloudCanvas {
 		position: relative;
+		overflow: hidden;
 		top: 50px;
 		span {
 			cursor: pointer;
@@ -271,8 +272,16 @@ body {
 }
 
 
-// CODIGO JOTA
+#graph { 
+	display: none;
+	background: #fff;
+	text-align: center;
+	canvas { 
+		margin-top: 100px;
 
+	}
+
+}
 
 
 #map {
@@ -281,6 +290,8 @@ body {
 		margin-top: 60px;
 		list-style: none;
 		font-size: 25px;
+		color: #424242;
+		overflow-y: hidden;
 	}
 
 	.marker {
@@ -321,6 +332,29 @@ body {
 		.tools {
 			margin-right: 100px;
 			margin-top: 20px;
+
+			.icon {
+				margin-right: 20px;
+			}
 		}
+	
+
+		#nav{ color: #fff; margin: 0px; padding: 0px; position: absolute; top: 18px; display: block; left: 313px; }
+		#nav > li{ list-style-type:none; float:left; display:block; margin:0px 10px;  position:relative; padding:10px; width:100px; }
+		#nav > li ul{ position:absolute; bottom: 100%; }
+		#nav li:hover > ul {
+		    display:block;
+		}
+		#nav > li:hover{
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px; }
+		#nav li ul{ margin:0px; padding:0px; display:none; }
+		#nav li ul li{ list-style-type:none; margin:10px 0 0 0; }
+		#nav li ul li a{ display:block; padding:5px 10px; color:#bdb49f; text-decoration:none; }
+		#nav li ul li:hover a{ color:#b15815;
+		-moz-border-radius:5px;
+		-webkit-border-radius:5px; }
+		#nav li span{ cursor:pointer; margin:0px 10px; font-weight:bold; }
 	}
+
 }

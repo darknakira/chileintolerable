@@ -215,6 +215,22 @@ function Cloud () {
 	};
 
 
+	this.filtersArray = function() {
+		var arr = [];
+		for (var i in selected) { 
+
+			for (var a in items) {
+
+				if (items[a][0] == selected[i])
+					arr.push(items[a]);
+			}
+		}
+
+		return arr;
+
+	};
+
+
 	var draw = function() {
 		$("#addFrase").focus();
 		if (!drawed) {

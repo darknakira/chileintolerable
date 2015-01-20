@@ -6,6 +6,9 @@ var socket = io.connect('54.215.212.113');
 
 function ChileIntolerable() {
 	var hidden = false;
+	var cloudRendered = false;
+	var mapRendered = false;
+	var rtMap;
 
 	var hideWindows = function() {
 
@@ -15,12 +18,28 @@ function ChileIntolerable() {
 
 		var map = document.getElementById('map');
 		map.style.top = window.innerHeight;
+
+		var graph = document.getElementById('graph');
+		graph.style.height = window.innerHeight;
 	
 	};
 
+	var showMapTab = function() {
+		$("#graph").fadeOut("slow", function() {
+			$(".mapCanvas").fadeIn("slow",function() { 
 
-	var showGraphs = function() {
+			});
+		});
+	};
 
+
+	var showGraphsTab = function() {
+		var rtGraph = new Graph;
+		$(".mapCanvas").fadeOut("slow", function() {
+			$("#graph").fadeIn("slow",function() { 
+				rtGraph.show();
+			});
+		});
 	};
 
 	var showWordsTab = function() {
@@ -28,42 +47,53 @@ function ChileIntolerable() {
 
 		$("#cloud").css('z-index', 9);
 		$("#cloud").animate({ top: 0 },1500,words.show);
+		$("#cloud .bar").unbind('click');
+		$("#cloud .bar").bind('click',hideWordsTab);
 	};
 
 	var hideWordsTab = function()  { 
-		$("#cloud").css('z-index', 0);
+		$("#cloud").css('z-index', 9);
 		$("#cloud").animate({ top: -window.innerHeight},1500);
 	};
 	var showMap = function() {
+
+
 		$("#logo").hide();
-		$("#cloud .handle .bar .up").toggleClass("down");
+		$("#cloud .handle .bar .up").addClass("down");
+		$("#cloud .handle .bar .up").removeClass("up");
+		
 		$("#cloud").animate({ top: -window.innerHeight + 30},1500,function() {
-			var rtMap = new Map;
 
-			rtMap.setFilters(words.filters);
-			
-			$("#map").animate({ top: 0 },1500,function() { 
+			if (!mapRendered) {
 				
-				$("#map .handle").css('bottom',-window.innerHeight);
 
-				$("#map .handle").fadeIn('fast');
-				rtMap.show() 
+				var rtMap = new Map;
 
 
-			});
+				rtMap.setFilters(words.filters);
+				rtMap.render();
+				$("#map").animate({ top: 0 },1500,function() { 
+					$("#map .handle").fadeIn("fast");
+					$("#map .handle").css("top", window.innerHeight - 80);
+
+
+					rtMap.show() 
+					mapRendered = true;
+				});
+			}
+			$("#cloud .bar").unbind('click');
+			$("#cloud .bar").bind('click',showWordsTab);
 		});
 	};
 
-	var hideMap = function() {
-		$("#map").animate({ top: window.innerHeight },1500);
-	};
 
 
 	var _setBindings = function() {
 		$("#logo").click(showWordsTab);
-		$("#cloud .bar").click(hideWordsTab);
+		$("#cloud .bar").bind('click',hideWordsTab);
 		$("#goMapBtn").click(showMap);
-		$("#showGraphsBtn").click(showGraphs);
+		$("#showGraphsBtn").click(showGraphsTab);
+		$("#showMapBtn").click(showMapTab);
 	};
 
 

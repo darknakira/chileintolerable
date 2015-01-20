@@ -38,6 +38,15 @@ a {
 .icon-map:before {
   content: "\e94b";
 }
+.icon-box-add:before {
+  content: "\e95e";
+}
+.icon-share2:before {
+  content: "\ea82";
+}
+.icon-calendar:before {
+  content: "\e953";
+}
 .icon {
   font-family: "icomoon" !important;
   font-weight: normal !important;
@@ -160,6 +169,7 @@ body {
 }
 #cloud #cloudCanvas {
   position: relative;
+  overflow: hidden;
   top: 50px;
 }
 #cloud #cloudCanvas span {
@@ -233,11 +243,21 @@ body {
 .handle .bar span:hover {
   color: #FF9900;
 }
+#graph {
+  display: none;
+  background: #fff;
+  text-align: center;
+}
+#graph canvas {
+  margin-top: 100px;
+}
 #map #tweetText {
   position: absolute;
   margin-top: 60px;
   list-style: none;
   font-size: 25px;
+  color: #424242;
+  overflow-y: hidden;
 }
 #map .marker {
   display: none;
@@ -276,4 +296,61 @@ body {
 #map .handle .tools {
   margin-right: 100px;
   margin-top: 20px;
+}
+#map .handle .tools .icon {
+  margin-right: 20px;
+}
+#map .handle #nav {
+  color: #fff;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 18px;
+  display: block;
+  left: 313px;
+}
+#map .handle #nav > li {
+  list-style-type: none;
+  float: left;
+  display: block;
+  margin: 0px 10px;
+  position: relative;
+  padding: 10px;
+  width: 100px;
+}
+#map .handle #nav > li ul {
+  position: absolute;
+  bottom: 100%;
+}
+#map .handle #nav li:hover > ul {
+  display: block;
+}
+#map .handle #nav > li:hover {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+#map .handle #nav li ul {
+  margin: 0px;
+  padding: 0px;
+  display: none;
+}
+#map .handle #nav li ul li {
+  list-style-type: none;
+  margin: 10px 0 0 0;
+}
+#map .handle #nav li ul li a {
+  display: block;
+  padding: 5px 10px;
+  color: #bdb49f;
+  text-decoration: none;
+}
+#map .handle #nav li ul li:hover a {
+  color: #b15815;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#map .handle #nav li span {
+  cursor: pointer;
+  margin: 0px 10px;
+  font-weight: bold;
 }
